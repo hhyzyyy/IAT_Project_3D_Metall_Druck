@@ -38,13 +38,14 @@ class IatProducer:
         print('[INFO] send_msg run!')
         values1, values2 = self.get_data()
         for i, v in enumerate(values1):
-            time.sleep(0.001)  # Senden einer Datenzeile alle 0,001 Sekunden (1 Millisekunde)
-            time_now = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
-            msg1 = str(i) + '&' + str(time_now) + '&' + str(v)
-            # msg2 = str(i) + '&' + str(time_now) + '&' + str(v)  # LSTM
-            msg2 = str(i) + '&' + str(time_now) + '&' + str(values2[i])
-            self.producer.send(topic=self.topic1, value=msg1.encode())  # Daten mit dem Thema 'Current' senden
-            self.producer.send(topic=self.topic2, value=msg2.encode())  # Daten mit dem Thema 'Voltage' senden
+            if i % 1 == 0:
+                time.sleep(0.001)  # Senden einer Datenzeile alle 0,001 Sekunden (1 Millisekunde)
+                time_now = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
+                msg1 = str(i) + '&' + str(time_now) + '&' + str(v)
+                # msg2 = str(i) + '&' + str(time_now) + '&' + str(v)  # LSTM
+                msg2 = str(i) + '&' + str(time_now) + '&' + str(values2[i])
+                self.producer.send(topic=self.topic1, value=msg1.encode())  # Daten mit dem Thema 'Current' senden
+                self.producer.send(topic=self.topic2, value=msg2.encode())  # Daten mit dem Thema 'Voltage' senden
 
     def run(self):
         # self.client.delete_topics([self.topic1, self.topic2])

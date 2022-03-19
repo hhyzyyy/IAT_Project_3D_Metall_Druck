@@ -139,10 +139,11 @@ class Ui_MainWindow(object):
         self.ptr = 0
         self.signal_status_list = [0, 0, 0]
         self.record_frequenz = ['', '']
-        self.record_time = []
         self.record_two_time = ['', '']
+        self.record_time = []
         self.flag = True
         self.data_frequenz_cmt, self.data_frequenz_pulse = [], []
+        self.data_cmt, self.data_pulse = [], []
 
         self.data_current = array.array('i')
         self.data_current = np.zeros(self.length).__array__('d')  # 把数组长度定下来
@@ -292,7 +293,7 @@ class Ui_MainWindow(object):
                         self.record_two_time[:-1] = self.record_two_time[1:]
                         self.record_two_time[-1] = self.record_time[0]
                         self.record_time = []
-                        print("[INFO] CMT: ", pos-160, t_now, residual[idx])
+                        print("[INFO] CMT: ", pos-200, t_now, residual[idx])
                         if self.record_two_time[0] != '' and self.record_two_time[1] != '':
                             t1 = datetime.strptime(self.record_two_time[0], '%Y-%m-%d %H:%M:%S')
                             t2 = datetime.strptime(self.record_two_time[1], '%Y-%m-%d %H:%M:%S')
@@ -308,7 +309,7 @@ class Ui_MainWindow(object):
                     self.record_two_time[:-1] = self.record_two_time[1:]
                     self.record_two_time[-1] = self.record_time[0]
                     self.record_time = []
-                    print("[INFO] Pulse: ", pos-160, t[self.length - length + idx], residual[idx])
+                    print("[INFO] Pulse: ", pos-200, t[self.length - length + idx], residual[idx])
                     if self.record_two_time[0] != '' and self.record_two_time[1] != '':
                         t1 = datetime.strptime(self.record_two_time[0], '%Y-%m-%d %H:%M:%S')
                         t2 = datetime.strptime(self.record_two_time[1], '%Y-%m-%d %H:%M:%S')
